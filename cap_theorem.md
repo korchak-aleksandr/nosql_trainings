@@ -24,5 +24,8 @@ CAP - Consistency, Availability, Partition tolerance. <br>
 Но если например в Cassandra настроить consistency level в значение ALL, то мы получим максимальную согласованность, но при этом потеряем большую долю Availability.
 
 Используемые материалы: <br>
-[Статья #1](https://medium.com/@bikas.katwal10/mongodb-vs-cassandra-vs-rdbms-where-do-they-stand-in-the-cap-theorem-1bae779a7a15#:~:text=CAP%20stands%20for%20Consistency%2C%20Availability,is%20in%20an%20inconsistent%20state.)
+[Статья #1](https://medium.com/@bikas.katwal10/mongodb-vs-cassandra-vs-rdbms-where-do-they-stand-in-the-cap-theorem-1bae779a7a15#:~:text=CAP%20stands%20for%20Consistency%2C%20Availability,is%20in%20an%20inconsistent%20state.) <br>
 [Статья #2](https://www.bigdataschool.ru/wiki/cap)
+
+Плюс схематичное изображение про распределение БД по CAP-теореме:
+![Cap](attachements/cap.png)
