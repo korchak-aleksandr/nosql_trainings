@@ -10,5 +10,3 @@
 ![ELK AWS](attachements/elk_postman.png)
 
 Успешно протестированы запросы в Elastic с функцией нечеткого поиска.
-
-Итоговая ссылка на коллекцию в PostMan: https://www.getpostman.com/collections/0620d7f00505662dd0c3
