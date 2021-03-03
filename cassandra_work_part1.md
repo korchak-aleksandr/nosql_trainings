@@ -3,7 +3,7 @@
 Отчет по работе:
 1. Был установлен локально Kubernetes
 2. Для удобства сразу был настроен Web UI (Dashboard) по инструкции на официальном сайте
-3. Был поднят трехузловой кластер из БД Cassandra. Перед созданием были созданы три Persistent Volumes.
+3. Был поднят трехузловой кластер из БД Cassandra. Перед созданием были созданы три Persistent Volumes
 
 		kubectl apply -f .\pv-kube-test-0.yaml
 		kubectl apply -f .\pv-kube-test-1.yaml
@@ -22,13 +22,13 @@
 
 ![cassandra_populate_test](attachements/cassandra_populate_test.png)
 
-5. На одной из нод Cassandra был установлен wget, скачан официальный архив Cassandra с инструментами.
+5. На одной из нод Cassandra был установлен wget, скачан официальный архив Cassandra с инструментами
 6. Была запущена утилита cassandra-stress на запись и чтение
 
 		./cassandra-stress write n=1000000
 		./cassandra-stress read n=100000
 
-Ниже результаты тестирования:
+Ниже результаты тестирования: <br>
 ![cassandra_stress_write](attachements/cassandra_stress_write.png)
 ![cassandra_stress_read](attachements/cassandra_stress_read.png)
 
