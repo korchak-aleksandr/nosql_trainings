@@ -1,28 +1,28 @@
-## ClickHouse
+п»ї## ClickHouse
 
-Отчет по работе:
-1. Было развернуто в докере два контейнера ClickHouse Server и ClickHouse Client
+РћС‚С‡РµС‚ РїРѕ СЂР°Р±РѕС‚Рµ:
+1. Р‘С‹Р»Рѕ СЂР°Р·РІРµСЂРЅСѓС‚Рѕ РІ РґРѕРєРµСЂРµ РґРІР° РєРѕРЅС‚РµР№РЅРµСЂР° ClickHouse Server Рё ClickHouse Client
 
 		docker run -d --name some-clickhouse-server --ulimit nofile=262144:262144 yandex/clickhouse-server
 		docker run -it --rm --link some-clickhouse-server:clickhouse-server yandex/clickhouse-client --host clickhouse-server
 
 ![clickhouse_docker](attachements/clickhouse_docker.png)
 
-При перезапуске контейнера ClickHouse Client требовалось вручную при подключении clickhouse-client прописывать IP адрес сервера, чтобы узнать внутренний IP сервера пользовался командой:
+РџСЂРё РїРµСЂРµР·Р°РїСѓСЃРєРµ РєРѕРЅС‚РµР№РЅРµСЂР° ClickHouse Client С‚СЂРµР±РѕРІР°Р»РѕСЃСЊ РІСЂСѓС‡РЅСѓСЋ РїСЂРё РїРѕРґРєР»СЋС‡РµРЅРёРё clickhouse-client РїСЂРѕРїРёСЃС‹РІР°С‚СЊ IP Р°РґСЂРµСЃ СЃРµСЂРІРµСЂР°, С‡С‚РѕР±С‹ СѓР·РЅР°С‚СЊ РІРЅСѓС‚СЂРµРЅРЅРёР№ IP СЃРµСЂРІРµСЂР° РїРѕР»СЊР·РѕРІР°Р»СЃСЏ РєРѕРјР°РЅРґРѕР№:
 
 		docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' some-clickhouse-server
 
-2. В контейнере ClickHouse Clien был установлен cUrl и xz-utils для возможности скачивания и распаковки архивов с данными для загрузки в ClickHouse
-3. Скачал  архивы и распаковал командами из tutorial
-4. Запустил загрузку в БД командами INSERT INTO
-5. Прогнал тестовые запросы на БД из tutorial <br>
+2. Р’ РєРѕРЅС‚РµР№РЅРµСЂРµ ClickHouse Client Р±С‹Р» СѓСЃС‚Р°РЅРѕРІР»РµРЅ cUrl Рё xz-utils РґР»СЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЃРєР°С‡РёРІР°РЅРёСЏ Рё СЂР°СЃРїР°РєРѕРІРєРё Р°СЂС…РёРІРѕРІ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ Р·Р°РіСЂСѓР·РєРё РІ ClickHouse
+3. РЎРєР°С‡Р°Р»  Р°СЂС…РёРІС‹ Рё СЂР°СЃРїР°РєРѕРІР°Р» РєРѕРјР°РЅРґР°РјРё РёР· tutorial
+4. Р—Р°РїСѓСЃС‚РёР» Р·Р°РіСЂСѓР·РєСѓ РІ Р‘Р” РєРѕРјР°РЅРґР°РјРё INSERT INTO
+5. РџСЂРѕРіРЅР°Р» С‚РµСЃС‚РѕРІС‹Рµ Р·Р°РїСЂРѕСЃС‹ РЅР° Р‘Р” РёР· tutorial <br>
 
 ![clickhouse_test_query](attachements/clickhouse_test_query.png)
 ![clickhouse_test_query](attachements/clickhouse_test_query_2.png)
 
-6. Отметил впечатляющую скорость выполнения запросов, а также очень низкое потребление ресурсов ОЗУ и Процессора. Потребление ОЗУ при любых запросах включая импорт не превышало 250Мб.
+6. РћС‚РјРµС‚РёР» РІРїРµС‡Р°С‚Р»СЏСЋС‰СѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РїСЂРѕСЃРѕРІ, Р° С‚Р°РєР¶Рµ РѕС‡РµРЅСЊ РЅРёР·РєРѕРµ РїРѕС‚СЂРµР±Р»РµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ РћР—РЈ Рё РџСЂРѕС†РµСЃСЃРѕСЂР°. РџРѕС‚СЂРµР±Р»РµРЅРёРµ РћР—РЈ РїСЂРё Р»СЋР±С‹С… Р·Р°РїСЂРѕСЃР°С… РІРєР»СЋС‡Р°СЏ РёРјРїРѕСЂС‚ РЅРµ РїСЂРµРІС‹С€Р°Р»Рѕ 250РњР±.
 
-Материалы:<br>
+РњР°С‚РµСЂРёР°Р»С‹:<br>
 https://clickhouse.tech/docs/ru/getting-started/tutorial/ <br>
 https://clickhouse.tech/docs/en/interfaces/cli/ <br>
 https://hub.docker.com/r/yandex/clickhouse-server
