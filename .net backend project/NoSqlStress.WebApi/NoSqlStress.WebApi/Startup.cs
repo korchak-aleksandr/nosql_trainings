@@ -6,6 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Cassandra;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
 
 namespace NoSqlStress.WebApi
 {
@@ -41,6 +45,13 @@ namespace NoSqlStress.WebApi
                     .WithQueryTimeout(10000)
                     .WithQueryOptions(new QueryOptions().SetConsistencyLevel(ConsistencyLevel.One))
                     .Build();
+            });
+
+            services.AddSingleton<MongoClientBase>(x =>
+            {
+                BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+                BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+                return new MongoClient(Configuration.GetConnectionString("MongoConnection"));
             });
         }
 

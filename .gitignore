@@ -220,6 +220,11 @@ project.lock.json
 *.feature.xlsx.*
 *.Specs_*.html
 
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
