@@ -41,7 +41,6 @@ namespace NoSqlStress.WebApi
             {
                 return Cluster.Builder()
                     .AddContactPoints(Configuration.GetConnectionString("CassandraConnection").Split(','))
-                    //.WithDefaultKeyspace("test")
                     .WithQueryTimeout(10000)
                     .WithQueryOptions(new QueryOptions().SetConsistencyLevel(ConsistencyLevel.One))
                     .Build();
@@ -58,10 +57,7 @@ namespace NoSqlStress.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NoSqlStress.WebApi v1"));

@@ -57,11 +57,7 @@ email text);"));
             {
                 var mapper = new Mapper(context);
 
-                await mapper.InsertAsync(entity);
-                
-                //var preparedStatement = await context.PrepareAsync("INSERT INTO test_table(id, name) VALUES (?,?)");
-                //var statement = preparedStatement.Bind(entity.Id, entity.Name);
-                //await context.ExecuteAsync(statement);
+                await mapper.InsertAsync(entity, CqlQueryOptions.New().DisableTracing());
             }
 
             return Ok();
@@ -74,12 +70,6 @@ email text);"));
             using (var context = await _cassandraCluster.ConnectAsync(KEY_SPACE))
             {
                 var mapper = new Mapper(context);
-
-                //var preparedStatement = await context.PrepareAsync("SELECT json FROM test_table WHERE id = ?");
-                //var statement = preparedStatement.Bind(id);
-
-                //var row = await context.ExecuteAsync(statement);
-                //var json = row.FirstOrDefault()?[0];
                 
                 var entity = await mapper.FirstOrDefaultAsync<TestEntity>($"FROM {nameof(TestEntity)} WHERE id = ?", id);
 
