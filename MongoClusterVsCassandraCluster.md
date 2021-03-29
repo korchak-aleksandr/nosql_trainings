@@ -41,7 +41,7 @@ mongos - машина для работы процесса mongos<br>
         Task<IActionResult> ReadEntity(Guid id);
     }
 
-Был создан контракт тестовой сущности. Идентификатором был выбран Guid, чтобы его использовать как ключ шардирования в Mongo. В Cassandra он использовался как Primary Key. Запись сущностей происходит по одной. Чтение происходит по Guid.
+Был создан контракт тестовой сущности. Идентификатором был выбран Guid, чтобы его использовать как ключ шардирования в Mongo. В Cassandra он использовался как Primary Key. Запись сущностей в БД происходит по одной. Чтение происходит по идентификатору.
 
     /// <summary>
     /// Тестовая сущность
@@ -103,7 +103,7 @@ docker push gcr.io/subtle-anthem-307219/no-sql-stress-web-api:20210323t005400
 
 6. Был написан Python скрипт для нагрузочного тестирования REST Api. Использовался пакет Locust.
 Код скрипта загружен на GitHub: [locustfile.py](PythonLocustStress/locustfile.py)
-Тестирование проводилось с локального компьютера, нагружалось Api в GCP. Перед стартом основного теста запускался прогрев REST Api около 10-15 секунд. Далее запускался основной тест с параметрами Users = 100, Spawn Rate = 1. Тест прогонялся околок 2 минут.
+Тестирование проводилось с локального компьютера, нагружалось Api в GCP. Перед стартом основного теста запускался прогрев REST Api около 10-15 секунд. Далее запускался основной тест с параметрами Users = 100, Spawn Rate = 1. Тест прогонялся около 2 минут.
 
 Для того чтобы вставляемые данные были максимально приближены к реальным использовался пакет Faker, который имеет много встроенных стратегий генерации реальных данных (адреса, Email, числа, текст, имена и так далее)
 
@@ -153,14 +153,21 @@ db.runCommand({shardCollection: "test.tests", key: {_id: 1}})
 2. В данной тестовой конфигурации даже увеличение ресурсов в два раза не сильно снизило отставание Cassandra от Mongo.
 3. В Cassandra запись работает быстрее чем чтение. В Mongo наоборот. Чтение имеется ввиду чтение по первичному ключу.
 4. В Cassandra наблюдается также точка деградации на графике записи, после которой видно снижение производительности.
+5. Скорее всего отставание Cassandra обусловлено не только требованием более высоких ресурсов ВМ, но и тем, что драйвера под .NET C# написаны менее качественно с точки зрения производительности.
 
 <br><br>
 Полезные ссылки:<br>
-https://stackoverflow.com/questions/55663172/docker-container-upload-to-gcp-cloud-run-with-core-web-api-app-not-working <br>
 https://codelabs.developers.google.com/codelabs/cloud-istio-aspnetcore-part1 <br>
-https://cloud.google.com/tools/visual-studio/docs/deployment-wizard
+https://cloud.google.com/tools/visual-studio/docs/deployment-wizard <br>
+https://codefresh.io/docs/docs/yaml-examples/examples/build-an-image-specify-dockerfile-location/ <br>
+https://www.joyfulbikeshedding.com/blog/2019-08-27-debugging-docker-builds.html <br>
+https://github.com/datastax/csharp-driver <br>
+https://docs.mongodb.com/drivers/csharp/
 <br><br>
 https://stackoverflow.com/questions/59818391/can-not-connect-between-cloud-run-and-compute-engine-using-internal-ip <br>
-https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#creating_a_connector 
+https://cloud.google.com/vpc/docs/configure-serverless-vpc-access#creating_a_connector <br>
+https://medium.com/net-core/deploy-an-asp-net-core-app-to-google-cloud-d5ff3ff99b2d <br>
+https://stackoverflow.com/questions/55663172/docker-container-upload-to-gcp-cloud-run-with-core-web-api-app-not-working
 <br><br>
+Похожие результаты тестирования из другого источника:<br>
 https://www.altoros.com/research-papers/nosql-performance-benchmark-2018-couchbase-server-v5-5-datastax-enterprise-v6-cassandra-and-mongodb-v3-6/?utm_source=xp&utm_medium=blog&utm_campaign=content
